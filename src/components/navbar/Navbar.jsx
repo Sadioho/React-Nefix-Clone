@@ -12,7 +12,6 @@ const Navbar = () => {
       <div className="container">
         <div className="left">
           <img
-            className="logo"
             src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png"
             alt=""
           />
