@@ -2,7 +2,7 @@ import {
   ArrowBackIosOutlined,
   ArrowForwardIosOutlined,
 } from '@material-ui/icons';
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ListItem from '../listItem/ListItem';
 import './list.scss';
 const List = () => {
@@ -13,7 +13,7 @@ const List = () => {
   const dataArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
   const handleClick = (direction) => {
-    const demo = +itemRef.current.scrollWidth + 5; // 5 margin right 
+    const demo = +itemRef.current.scrollWidth + 5; // 5 margin right
     console.log(demo);
     if (direction === 'left' && slideNumber > 1) {
       setSlideNumber(slideNumber - 1);
@@ -38,7 +38,7 @@ const List = () => {
         />
         <div className="container" ref={listRef}>
           {dataArray.map((item, index) => (
-            <ListItem itemRef={itemRef} key={index} item={item} />
+            <ListItem itemRef={itemRef} key={index} index={index} />
           ))}
         </div>
         <ArrowForwardIosOutlined
