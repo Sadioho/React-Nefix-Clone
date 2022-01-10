@@ -1,9 +1,9 @@
 import React from 'react';
-import Watch from '../components/watch/Watch';
+import Login from '../login/Login';
 import './home.scss';
 
 const Home = () => {
-  return <Watch />;
+  return <Login />;
 };
 
 export default Home;
