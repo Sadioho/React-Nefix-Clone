@@ -5,12 +5,14 @@ import {
 import React, { useRef, useState } from 'react';
 import ListItem from '../listItem/ListItem';
 import './list.scss';
-const List = () => {
+import _get from 'lodash/get';
+import _size from 'lodash/size';
+const List = ({ list }) => {
   const [slideNumber, setSlideNumber] = useState(1);
 
   const listRef = useRef();
   const itemRef = useRef();
-  const dataArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const dataArray = _get(list, 'content');
 
   const handleClick = (direction) => {
     const demo = +itemRef.current.scrollWidth + 5; // 5 margin right
@@ -29,7 +31,7 @@ const List = () => {
   };
   return (
     <div className="list">
-      <span className="listTitle">Continue to watch</span>
+      <span className="listTitle">{list.title}</span>
       <div className="wrapper">
         <ArrowBackIosOutlined
           className="sliderArrow left"
@@ -38,14 +40,16 @@ const List = () => {
         />
         <div className="container" ref={listRef}>
           {dataArray.map((item, index) => (
-            <ListItem itemRef={itemRef} key={index} index={index} />
+            <ListItem item={item} itemRef={itemRef} key={index} index={index} />
           ))}
         </div>
-        <ArrowForwardIosOutlined
-          className="sliderArrow right"
-          onClick={() => handleClick('right')}
-          style={{ display: slideNumber === dataArray.length - 5 && 'none' }} // 5 : number slider display
-        />
+        {_size(dataArray) > 5 && (
+          <ArrowForwardIosOutlined
+            className="sliderArrow right"
+            onClick={() => handleClick('right')}
+            style={{ display: slideNumber === dataArray.length - 5 && 'none' }} // 5 : number slider display
+          />
+        )}
       </div>
     </div>
   );

@@ -1,12 +1,31 @@
 import { InfoOutlined, PlayArrow } from '@material-ui/icons';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import './featured.scss';
 const Featured = ({ type }) => {
+  const [content, setContent] = useState({});
+  console.log(content);
+  useEffect(() => {
+    const getRandomContent = async () => {
+      try {
+        const res = await axios.get(`/movies/random?type=${type}`, {
+          headers: {
+            token:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZGQ1ZDEwZjIzYTUxYjNjMGVlYzhlMyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0MjEyNjgyNywiZXhwIjoxNjQyNTU4ODI3fQ.K3NlkC5PsIeNuVjwT-fvvUfPW6rpZIaepGgo5gtnYAY',
+          },
+        });
+        setContent(res.data[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getRandomContent();
+  }, [type]);
   return (
     <div className="featured">
       {type && (
         <div className="category">
-          <span>{type === 'movie' ? 'Movies' : 'Series'}</span>
+          <span>{type === 'movies' ? 'Movies' : 'Series'}</span>
           <select name="genre" id="genre">
             <option>Genre</option>
             <option value="adventure">Adventure</option>
@@ -22,25 +41,13 @@ const Featured = ({ type }) => {
             <option value="animation">Animation</option>
             <option value="drama">Drama</option>
             <option value="documentary">Documentary</option>
-          
           </select>
         </div>
       )}
-      <img
-        src="https://ragus.vn/wp-content/uploads/2020/04/Money-Heist-Season-4.png"
-        alt=""
-      />
+      <img src={content.img} alt="" />
       <div className="info">
-        <img
-          src="https://occ-0-1432-1433.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABUZdeG1DrMstq-YKHZ-dA-cx2uQN_YbCYx7RABDk0y7F8ZK6nzgCz4bp5qJVgMizPbVpIvXrd4xMBQAuNe0xmuW2WjoeGMDn1cFO.webp?r=df1"
-          alt=""
-        />
-        <span className="desc">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim
-          commodi quisquam quis aut facere reprehenderit veritatis ab a
-          temporibus ducimus dolores nisi assumenda perferendis, ipsum, neque
-          dolor delectus vitae? dolores nisi assumenda perferendis
-        </span>
+        <img src={content.imgTitle} alt="" />
+        <span className="desc">{content.desc}</span>
         <div className="buttons">
           <button className="play">
             <PlayArrow fontSize="large" />
